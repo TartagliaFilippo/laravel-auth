@@ -11,11 +11,11 @@
             <label for="title" class="form-label">Titolo</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ $project->title }}" />
 
+            <label for="url" class="form-label">Url Progetto</label>
+            <input type="text" class="form-control" id="url" name="url" value="{{ $project->url }}" />
+
             <label for="content" class="form-label">Descrizione</label>
             <textarea class="form-control" id="content" name="content" rows="4">{{ $project->content }}</textarea>
-
-            <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="{{ $project->slug }}" />
 
             <button type="submit" class="btn btn-success mt-5">Salva</button>
         </form>

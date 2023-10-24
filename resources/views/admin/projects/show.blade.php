@@ -9,6 +9,7 @@
                 {{ $project->title }}
             </div>
             <div class="card-body">
+                <a href="{{ $project->url }}">Link "{{ $project->title }}"</a>
                 <p class="card-text">{{ $project->content }}</p>
             </div>
             <div class="card-footer text-body-secondary">

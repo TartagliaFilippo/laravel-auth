@@ -11,11 +11,11 @@
             <label for="title" class="form-label">Titolo</label>
             <input type="text" class="form-control" id="title" name="title" />
 
+            <label for="url" class="form-label">Url Progetto</label>
+            <input type="text" class="form-control" id="url" name="url" />
+
             <label for="content" class="form-label">Descrizione</label>
             <textarea class="form-control" id="content" name="content" rows="4"></textarea>
-
-            <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" />
 
             <button type="submit" class="btn btn-success mt-5">Salva</button>
         </form>
