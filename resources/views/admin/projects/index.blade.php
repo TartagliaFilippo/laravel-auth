@@ -36,7 +36,8 @@
                             <a href="{{ route('admin.projects.edit', $project) }}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#delete-modal-{{ $project->id }}">
+                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                data-bs-target="#delete-modal-{{ $project->id }}">
                                 <i class="fa-solid fa-trash text-danger"></i>
                             </a>
 
