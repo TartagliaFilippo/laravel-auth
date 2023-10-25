@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -38,7 +39,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $this->validation($request->all());
+        ;
         $project = new Project;
         $project->fill($data);
         $project->slug = Str::slug($project->title);
@@ -77,7 +79,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->all();
+        $data = $this->validation($request->all(), $project->id);
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
     }
@@ -92,5 +94,28 @@ class ProjectController extends Controller
     {
         $project->delete();
         return redirect()->route('admin.projects.index');
+    }
+
+    private function validation($data)
+    {
+        $validator = Validator::make(
+            $data,
+            [
+                'title' => 'required|string',
+                'url' => "required|url",
+                "content" => "nullable|string",
+            ],
+            [
+                'title.required' => 'Il titolo è obbligatorio',
+                'title.string' => 'Il titolo deve essere una stringa',
+
+                'url.required' => 'I\'url è obbligatorio',
+                'url.integer' => 'I\'url deve essere un link',
+
+                'content.string' => 'Il contenuto deve essere una stringa',
+            ]
+        )->validate();
+
+        return $validator;
     }
 }
