@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,10 +40,10 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $data = $this->validation($request->all());
-        ;
+        $data = $request->validated();
+
         $project = new Project;
         $project->fill($data);
         $project->slug = Str::slug($project->title);
@@ -77,9 +80,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdatePostRequest $request, Project $project)
     {
-        $data = $this->validation($request->all(), $project->id);
+        $data = $request->validated();
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
     }
@@ -94,28 +97,5 @@ class ProjectController extends Controller
     {
         $project->delete();
         return redirect()->route('admin.projects.index');
-    }
-
-    private function validation($data)
-    {
-        $validator = Validator::make(
-            $data,
-            [
-                'title' => 'required|string',
-                'url' => "required|url",
-                "content" => "nullable|string",
-            ],
-            [
-                'title.required' => 'Il titolo è obbligatorio',
-                'title.string' => 'Il titolo deve essere una stringa',
-
-                'url.required' => 'I\'url è obbligatorio',
-                'url.integer' => 'I\'url deve essere un link',
-
-                'content.string' => 'Il contenuto deve essere una stringa',
-            ]
-        )->validate();
-
-        return $validator;
     }
 }
